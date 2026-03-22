@@ -158,6 +158,30 @@ export class TileGeometry {
       case 'MODULO_ACRISTADO_PX_NZ':
         TileGeometry.buildModuloAcristado(group, 1, -1);
         break;
+      case 'MODULO_ACRISTADO_BAND_PX_PZ':
+        TileGeometry.buildModuloAcristadoBand(group, 1, 1);
+        break;
+      case 'MODULO_ACRISTADO_BAND_NX_PZ':
+        TileGeometry.buildModuloAcristadoBand(group, -1, 1);
+        break;
+      case 'MODULO_ACRISTADO_BAND_NX_NZ':
+        TileGeometry.buildModuloAcristadoBand(group, -1, -1);
+        break;
+      case 'MODULO_ACRISTADO_BAND_PX_NZ':
+        TileGeometry.buildModuloAcristadoBand(group, 1, -1);
+        break;
+      case 'MODULO_ACRISTADO_ESQUINA_PX_PZ':
+        TileGeometry.buildModuloAcristadoEsquina(group, 1, 1);
+        break;
+      case 'MODULO_ACRISTADO_ESQUINA_NX_PZ':
+        TileGeometry.buildModuloAcristadoEsquina(group, -1, 1);
+        break;
+      case 'MODULO_ACRISTADO_ESQUINA_NX_NZ':
+        TileGeometry.buildModuloAcristadoEsquina(group, -1, -1);
+        break;
+      case 'MODULO_ACRISTADO_ESQUINA_PX_NZ':
+        TileGeometry.buildModuloAcristadoEsquina(group, 1, -1);
+        break;
       case 'TORRE_ESCALERA':
         TileGeometry.buildTorreEscalera(group);
         break;
@@ -463,6 +487,129 @@ export class TileGeometry {
       m.rotation.y = rotYZ;
       m.userData.materialType = 'accent';
       group.add(m);
+    }
+  }
+
+  // Modulo Acristado Band: Half-height band windows on two corner faces
+  private static buildModuloAcristadoBand(group: THREE.Group, glassXSign: number, glassZSign: number): void {
+    const openFaces = { px: glassXSign === 1, nx: glassXSign === -1, pz: glassZSign === 1, nz: glassZSign === -1 };
+    const body = new THREE.Mesh(this.createOpenBoxGeo(openFaces));
+    body.userData.materialType = 'concreteDouble';
+    group.add(body);
+
+    const glassInset = 0.02;
+    const glassH = 0.7;
+    const glassW = this.S * 0.85;
+    const glassY = 0.1;
+    const mullW = 0.03;
+
+    // Concrete infill around smaller windows
+    this.addWindowWall(group, glassXSign, 0, glassW, glassH, glassY);
+    this.addWindowWall(group, 0, glassZSign, glassW, glassH, glassY);
+
+    if (Math.random() < 0.4) {
+      const light = new THREE.PointLight(0xffe0b0, 0.8, 4);
+      light.position.set(0, 0, 0);
+      light.castShadow = false;
+      group.add(light);
+    }
+
+    // Glass + mullions on both faces
+    for (const [dX, dZ] of [[glassXSign, 0], [0, glassZSign]]) {
+      const glass = new THREE.Mesh(new THREE.PlaneGeometry(glassW, glassH));
+      const rotY = dX !== 0
+        ? (dX > 0 ? Math.PI / 2 : -Math.PI / 2)
+        : (dZ! > 0 ? 0 : Math.PI);
+      if (dX !== 0) glass.position.set(dX * (this.H + glassInset), glassY, 0);
+      else glass.position.set(0, glassY, dZ! * (this.H + glassInset));
+      glass.rotation.y = rotY;
+      glass.userData.materialType = 'glass';
+      group.add(glass);
+
+      const mPos = dX !== 0 ? dX * (this.H + 0.001) : 0;
+      const mPosZ = dZ !== 0 ? dZ! * (this.H + 0.001) : 0;
+      // 3 vertical + 1 horizontal mullion
+      for (let i = 0; i < 3; i++) {
+        const frac = -glassW / 2 + (i + 0.5) * (glassW / 3);
+        const m = new THREE.Mesh(new THREE.PlaneGeometry(mullW, glassH));
+        if (dX !== 0) m.position.set(mPos, glassY, frac);
+        else m.position.set(frac, glassY, mPosZ);
+        m.rotation.y = rotY;
+        m.userData.materialType = 'accent';
+        group.add(m);
+      }
+      const hm = new THREE.Mesh(new THREE.PlaneGeometry(glassW, mullW));
+      if (dX !== 0) hm.position.set(mPos, glassY, 0);
+      else hm.position.set(0, glassY, mPosZ);
+      hm.rotation.y = rotY;
+      hm.userData.materialType = 'accent';
+      group.add(hm);
+    }
+  }
+
+  // Modulo Acristado Esquina: Full corner window — glass wraps around the corner continuously
+  private static buildModuloAcristadoEsquina(group: THREE.Group, glassXSign: number, glassZSign: number): void {
+    const openFaces = { px: glassXSign === 1, nx: glassXSign === -1, pz: glassZSign === 1, nz: glassZSign === -1 };
+    const body = new THREE.Mesh(this.createOpenBoxGeo(openFaces));
+    body.userData.materialType = 'concreteDouble';
+    group.add(body);
+
+    const glassInset = 0.02;
+    const glassH = this.S * 0.75;
+    const mullW = 0.03;
+    // Full-width glass on each face (extends all the way to the corner)
+    const glassW = this.S;
+
+    // Concrete infill (only top/bottom strips, no side strips at the corner)
+    this.addWindowWall(group, glassXSign, 0, glassW, glassH, 0);
+    this.addWindowWall(group, 0, glassZSign, glassW, glassH, 0);
+
+    if (Math.random() < 0.4) {
+      const light = new THREE.PointLight(0xffe0b0, 0.8, 4);
+      light.position.set(0, 0, 0);
+      light.castShadow = false;
+      group.add(light);
+    }
+
+    // Glass panels — full width, meeting at the corner with no concrete divider
+    const glassX = new THREE.Mesh(new THREE.PlaneGeometry(glassW, glassH));
+    glassX.position.set(glassXSign * (this.H + glassInset), 0, 0);
+    glassX.rotation.y = glassXSign > 0 ? Math.PI / 2 : -Math.PI / 2;
+    glassX.userData.materialType = 'glass';
+    group.add(glassX);
+
+    const glassZ = new THREE.Mesh(new THREE.PlaneGeometry(glassW, glassH));
+    glassZ.position.set(0, 0, glassZSign * (this.H + glassInset));
+    glassZ.rotation.y = glassZSign > 0 ? 0 : Math.PI;
+    glassZ.userData.materialType = 'glass';
+    group.add(glassZ);
+
+    // Mullions — 4 vertical + 2 horizontal on each face, NO mullion at corner
+    const wallPos = this.H + 0.001;
+    for (const [dX, dZ] of [[glassXSign, 0], [0, glassZSign]]) {
+      const rotY = dX !== 0
+        ? (dX > 0 ? Math.PI / 2 : -Math.PI / 2)
+        : (dZ! > 0 ? 0 : Math.PI);
+      const mPosX = dX !== 0 ? dX * wallPos : 0;
+      const mPosZ = dZ !== 0 ? dZ! * wallPos : 0;
+      for (let i = 0; i < 4; i++) {
+        const frac = -glassW / 2 + (i + 0.5) * (glassW / 4);
+        const m = new THREE.Mesh(new THREE.PlaneGeometry(mullW, glassH));
+        if (dX !== 0) m.position.set(mPosX, 0, frac);
+        else m.position.set(frac, 0, mPosZ);
+        m.rotation.y = rotY;
+        m.userData.materialType = 'accent';
+        group.add(m);
+      }
+      for (let i = 0; i < 2; i++) {
+        const my = -glassH / 2 + (i + 0.5) * (glassH / 2);
+        const hm = new THREE.Mesh(new THREE.PlaneGeometry(glassW, mullW));
+        if (dX !== 0) hm.position.set(mPosX, my, 0);
+        else hm.position.set(0, my, mPosZ);
+        hm.rotation.y = rotY;
+        hm.userData.materialType = 'accent';
+        group.add(hm);
+      }
     }
   }
 

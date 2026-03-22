@@ -210,6 +210,50 @@ const MODULO_ACRISTADO_PX_NZ: TileDef = {
   roofOnly: false,
 };
 
+// Glazed module with half-height band windows — 4 rotations (same sockets as ACRISTADO)
+const MODULO_ACRISTADO_BAND_PX_PZ: TileDef = {
+  id: 'MODULO_ACRISTADO_BAND_PX_PZ',
+  sockets: { [D.POS_Y]: [S.CONCRETE], [D.NEG_Y]: [S.CONCRETE], [D.POS_X]: [S.GLASS, S.EMPTY], [D.NEG_X]: [S.CONCRETE, S.EMPTY], [D.POS_Z]: [S.GLASS, S.EMPTY], [D.NEG_Z]: [S.CONCRETE, S.EMPTY] },
+  weight: 1.2, minY: 1, maxY: null, roofOnly: false,
+};
+const MODULO_ACRISTADO_BAND_NX_PZ: TileDef = {
+  id: 'MODULO_ACRISTADO_BAND_NX_PZ',
+  sockets: { [D.POS_Y]: [S.CONCRETE], [D.NEG_Y]: [S.CONCRETE], [D.POS_X]: [S.CONCRETE, S.EMPTY], [D.NEG_X]: [S.GLASS, S.EMPTY], [D.POS_Z]: [S.GLASS, S.EMPTY], [D.NEG_Z]: [S.CONCRETE, S.EMPTY] },
+  weight: 1.2, minY: 1, maxY: null, roofOnly: false,
+};
+const MODULO_ACRISTADO_BAND_NX_NZ: TileDef = {
+  id: 'MODULO_ACRISTADO_BAND_NX_NZ',
+  sockets: { [D.POS_Y]: [S.CONCRETE], [D.NEG_Y]: [S.CONCRETE], [D.POS_X]: [S.CONCRETE, S.EMPTY], [D.NEG_X]: [S.GLASS, S.EMPTY], [D.POS_Z]: [S.CONCRETE, S.EMPTY], [D.NEG_Z]: [S.GLASS, S.EMPTY] },
+  weight: 1.2, minY: 1, maxY: null, roofOnly: false,
+};
+const MODULO_ACRISTADO_BAND_PX_NZ: TileDef = {
+  id: 'MODULO_ACRISTADO_BAND_PX_NZ',
+  sockets: { [D.POS_Y]: [S.CONCRETE], [D.NEG_Y]: [S.CONCRETE], [D.POS_X]: [S.GLASS, S.EMPTY], [D.NEG_X]: [S.CONCRETE, S.EMPTY], [D.POS_Z]: [S.CONCRETE, S.EMPTY], [D.NEG_Z]: [S.GLASS, S.EMPTY] },
+  weight: 1.2, minY: 1, maxY: null, roofOnly: false,
+};
+
+// Glazed module with full corner window (glass wraps around corner) — 4 rotations
+const MODULO_ACRISTADO_ESQUINA_PX_PZ: TileDef = {
+  id: 'MODULO_ACRISTADO_ESQUINA_PX_PZ',
+  sockets: { [D.POS_Y]: [S.CONCRETE], [D.NEG_Y]: [S.CONCRETE], [D.POS_X]: [S.GLASS, S.EMPTY], [D.NEG_X]: [S.CONCRETE, S.EMPTY], [D.POS_Z]: [S.GLASS, S.EMPTY], [D.NEG_Z]: [S.CONCRETE, S.EMPTY] },
+  weight: 1.2, minY: 1, maxY: null, roofOnly: false,
+};
+const MODULO_ACRISTADO_ESQUINA_NX_PZ: TileDef = {
+  id: 'MODULO_ACRISTADO_ESQUINA_NX_PZ',
+  sockets: { [D.POS_Y]: [S.CONCRETE], [D.NEG_Y]: [S.CONCRETE], [D.POS_X]: [S.CONCRETE, S.EMPTY], [D.NEG_X]: [S.GLASS, S.EMPTY], [D.POS_Z]: [S.GLASS, S.EMPTY], [D.NEG_Z]: [S.CONCRETE, S.EMPTY] },
+  weight: 1.2, minY: 1, maxY: null, roofOnly: false,
+};
+const MODULO_ACRISTADO_ESQUINA_NX_NZ: TileDef = {
+  id: 'MODULO_ACRISTADO_ESQUINA_NX_NZ',
+  sockets: { [D.POS_Y]: [S.CONCRETE], [D.NEG_Y]: [S.CONCRETE], [D.POS_X]: [S.CONCRETE, S.EMPTY], [D.NEG_X]: [S.GLASS, S.EMPTY], [D.POS_Z]: [S.CONCRETE, S.EMPTY], [D.NEG_Z]: [S.GLASS, S.EMPTY] },
+  weight: 1.2, minY: 1, maxY: null, roofOnly: false,
+};
+const MODULO_ACRISTADO_ESQUINA_PX_NZ: TileDef = {
+  id: 'MODULO_ACRISTADO_ESQUINA_PX_NZ',
+  sockets: { [D.POS_Y]: [S.CONCRETE], [D.NEG_Y]: [S.CONCRETE], [D.POS_X]: [S.GLASS, S.EMPTY], [D.NEG_X]: [S.CONCRETE, S.EMPTY], [D.POS_Z]: [S.CONCRETE, S.EMPTY], [D.NEG_Z]: [S.GLASS, S.EMPTY] },
+  weight: 1.2, minY: 1, maxY: null, roofOnly: false,
+};
+
 // Stair tower — strong vertical core
 // Bottom uses [STAIRS, STRUCT] so it can start from structural support (pilotis/beams)
 // Sides use [CONCRETE, EMPTY] for edge placement
@@ -362,6 +406,14 @@ export const ALL_TILES: TileDef[] = [
   MODULO_ACRISTADO_NX_PZ,
   MODULO_ACRISTADO_NX_NZ,
   MODULO_ACRISTADO_PX_NZ,
+  MODULO_ACRISTADO_BAND_PX_PZ,
+  MODULO_ACRISTADO_BAND_NX_PZ,
+  MODULO_ACRISTADO_BAND_NX_NZ,
+  MODULO_ACRISTADO_BAND_PX_NZ,
+  MODULO_ACRISTADO_ESQUINA_PX_PZ,
+  MODULO_ACRISTADO_ESQUINA_NX_PZ,
+  MODULO_ACRISTADO_ESQUINA_NX_NZ,
+  MODULO_ACRISTADO_ESQUINA_PX_NZ,
   TORRE_ESCALERA,
   CODO_ESCALERA,
   // Connections
