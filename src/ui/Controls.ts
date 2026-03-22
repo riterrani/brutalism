@@ -17,11 +17,9 @@ export class Controls {
     genBtn.addEventListener('click', () => callbacks.onGenerate());
     this.container.appendChild(genBtn);
 
-    // Seed input row
+    // Seed input row (hidden)
     const seedRow = document.createElement('div');
-    seedRow.style.display = 'flex';
-    seedRow.style.gap = '4px';
-    seedRow.style.alignItems = 'center';
+    seedRow.style.display = 'none';
 
     const seedInput = document.createElement('input');
     seedInput.type = 'text';
