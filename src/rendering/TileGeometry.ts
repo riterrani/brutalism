@@ -384,7 +384,7 @@ export class TileGeometry {
 
     // Balcony — floor slab + side walls + front wall, open top
     const balcDepth = 0.6;   // how far it protrudes
-    const balcWidth = 1.2;   // width perpendicular to protrusion
+    const balcWidth = this.S - 0.1;   // almost full tile width
     const slabT = 0.1;       // floor slab thickness
     const wallT = 0.06;      // side/front wall thickness
     const wallH = 0.45;      // parapet wall height

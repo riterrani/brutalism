@@ -145,22 +145,22 @@ class App {
 
       if (neighborTopY(1, 0) !== topY) {
         const w = new THREE.Mesh(new THREE.BoxGeometry(wallT, wallH, S));
-        w.position.set(H, wallH / 2, 0);
+        w.position.set(H - wallT / 2, wallH / 2, 0);
         terraceGroup.add(w);
       }
       if (neighborTopY(-1, 0) !== topY) {
         const w = new THREE.Mesh(new THREE.BoxGeometry(wallT, wallH, S));
-        w.position.set(-H, wallH / 2, 0);
+        w.position.set(-H + wallT / 2, wallH / 2, 0);
         terraceGroup.add(w);
       }
       if (neighborTopY(0, 1) !== topY) {
         const w = new THREE.Mesh(new THREE.BoxGeometry(S, wallH, wallT));
-        w.position.set(0, wallH / 2, H);
+        w.position.set(0, wallH / 2, H - wallT / 2);
         terraceGroup.add(w);
       }
       if (neighborTopY(0, -1) !== topY) {
         const w = new THREE.Mesh(new THREE.BoxGeometry(S, wallH, wallT));
-        w.position.set(0, wallH / 2, -H);
+        w.position.set(0, wallH / 2, -H + wallT / 2);
         terraceGroup.add(w);
       }
 
