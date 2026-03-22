@@ -1,7 +1,7 @@
 // Grid dimensions (default) — large for city-scale generation
 export const GRID_SIZE_X = 9;
 export const GRID_SIZE_Z = 9;
-export const GRID_SIZE_Y_DEFAULT = 12;
+export const GRID_SIZE_Y_DEFAULT = 10;
 export const GRID_SIZE_Y_MIN = 4;
 export const GRID_SIZE_Y_MAX = 16;
 export const GRID_SIZE_X_MIN = 3;

@@ -133,14 +133,6 @@ export class TileGeometry {
         // Intentionally empty — void at ground level
         break;
 
-      // Transition layer
-      case 'VIGA_CARGA_X':
-        TileGeometry.buildVigaCargaX(group);
-        break;
-      case 'VIGA_CARGA_Z':
-        TileGeometry.buildVigaCargaZ(group);
-        break;
-
       // Habitation modules
       case 'MODULO_BALCON_PX':
         TileGeometry.buildModuloBalcon(group, 1, 0);
@@ -264,46 +256,6 @@ export class TileGeometry {
     const slab = new THREE.Mesh(slabGeo);
     slab.position.y = this.H - slabThickness / 2;
     group.add(slab);
-  }
-
-  // ==========================================
-  // TRANSITION LAYER TILES
-  // ==========================================
-
-  // Viga de Carga X: Heavy loading beam along X axis
-  private static buildVigaCargaX(group: THREE.Group): void {
-    const beamWidth = this.S;
-    const beamHeight = 0.8;
-    const beamDepth = 0.8;
-
-    const geo = new THREE.BoxGeometry(beamWidth, beamHeight, beamDepth);
-    const mesh = new THREE.Mesh(geo);
-    mesh.position.y = -this.H + beamHeight / 2;
-    group.add(mesh);
-
-    const detailGeo = new THREE.BoxGeometry(beamWidth, 0.1, beamDepth + 0.1);
-    const detail = new THREE.Mesh(detailGeo);
-    detail.position.y = -this.H + beamHeight - 0.1;
-    detail.userData.materialType = 'darkConcrete';
-    group.add(detail);
-  }
-
-  // Viga de Carga Z: Heavy loading beam along Z axis
-  private static buildVigaCargaZ(group: THREE.Group): void {
-    const beamWidth = 0.8;
-    const beamHeight = 0.8;
-    const beamDepth = this.S;
-
-    const geo = new THREE.BoxGeometry(beamWidth, beamHeight, beamDepth);
-    const mesh = new THREE.Mesh(geo);
-    mesh.position.y = -this.H + beamHeight / 2;
-    group.add(mesh);
-
-    const detailGeo = new THREE.BoxGeometry(beamWidth + 0.1, 0.1, beamDepth);
-    const detail = new THREE.Mesh(detailGeo);
-    detail.position.y = -this.H + beamHeight - 0.1;
-    detail.userData.materialType = 'darkConcrete';
-    group.add(detail);
   }
 
   // ==========================================

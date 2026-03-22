@@ -74,44 +74,8 @@ const EMPTY_GROUND: TileDef = {
 };
 
 // ==========================================
-// TRANSITION LAYER TILES (Y = 1)
 // ==========================================
-
-// Load beams use [CONCRETE, EMPTY] on connecting faces so they can terminate at building edges
-const VIGA_CARGA_X: TileDef = {
-  id: 'VIGA_CARGA_X',
-  sockets: {
-    [D.POS_Y]: [S.CONCRETE],
-    [D.NEG_Y]: [S.STRUCT],
-    [D.POS_X]: [S.CONCRETE, S.EMPTY],
-    [D.NEG_X]: [S.CONCRETE, S.EMPTY],
-    [D.POS_Z]: [S.EMPTY],
-    [D.NEG_Z]: [S.EMPTY],
-  },
-  weight: 2.0,
-  minY: 1,
-  maxY: 1,
-  roofOnly: false,
-};
-
-const VIGA_CARGA_Z: TileDef = {
-  id: 'VIGA_CARGA_Z',
-  sockets: {
-    [D.POS_Y]: [S.CONCRETE],
-    [D.NEG_Y]: [S.STRUCT],
-    [D.POS_X]: [S.EMPTY],
-    [D.NEG_X]: [S.EMPTY],
-    [D.POS_Z]: [S.CONCRETE, S.EMPTY],
-    [D.NEG_Z]: [S.CONCRETE, S.EMPTY],
-  },
-  weight: 2.0,
-  minY: 1,
-  maxY: 1,
-  roofOnly: false,
-};
-
-// ==========================================
-// HABITATION MODULES (Y >= 2)
+// HABITATION MODULES (Y >= 1)
 // ==========================================
 
 // Module with protruding balcony — 4 rotations
@@ -127,7 +91,7 @@ const MODULO_BALCON_PX: TileDef = {
     [D.NEG_Z]: [S.CONCRETE, S.EMPTY],
   },
   weight: 1.5,
-  minY: 2,
+  minY: 1,
   maxY: null,
   roofOnly: false,
 };
@@ -143,7 +107,7 @@ const MODULO_BALCON_NX: TileDef = {
     [D.NEG_Z]: [S.CONCRETE, S.EMPTY],
   },
   weight: 1.5,
-  minY: 2,
+  minY: 1,
   maxY: null,
   roofOnly: false,
 };
@@ -159,7 +123,7 @@ const MODULO_BALCON_PZ: TileDef = {
     [D.NEG_Z]: [S.CONCRETE],
   },
   weight: 1.5,
-  minY: 2,
+  minY: 1,
   maxY: null,
   roofOnly: false,
 };
@@ -175,7 +139,7 @@ const MODULO_BALCON_NZ: TileDef = {
     [D.NEG_Z]: [S.EMPTY],
   },
   weight: 1.5,
-  minY: 2,
+  minY: 1,
   maxY: null,
   roofOnly: false,
 };
@@ -193,7 +157,7 @@ const MODULO_ACRISTADO_PX_PZ: TileDef = {
     [D.NEG_Z]: [S.CONCRETE, S.EMPTY],
   },
   weight: 1.5,
-  minY: 2,
+  minY: 1,
   maxY: null,
   roofOnly: false,
 };
@@ -209,7 +173,7 @@ const MODULO_ACRISTADO_NX_PZ: TileDef = {
     [D.NEG_Z]: [S.CONCRETE, S.EMPTY],
   },
   weight: 1.5,
-  minY: 2,
+  minY: 1,
   maxY: null,
   roofOnly: false,
 };
@@ -225,7 +189,7 @@ const MODULO_ACRISTADO_NX_NZ: TileDef = {
     [D.NEG_Z]: [S.GLASS, S.EMPTY],
   },
   weight: 1.5,
-  minY: 2,
+  minY: 1,
   maxY: null,
   roofOnly: false,
 };
@@ -241,7 +205,7 @@ const MODULO_ACRISTADO_PX_NZ: TileDef = {
     [D.NEG_Z]: [S.GLASS, S.EMPTY],
   },
   weight: 1.5,
-  minY: 2,
+  minY: 1,
   maxY: null,
   roofOnly: false,
 };
@@ -277,7 +241,7 @@ const CODO_ESCALERA: TileDef = {
     [D.NEG_Z]: [S.CONCRETE, S.EMPTY],
   },
   weight: 1.5,
-  minY: 2,
+  minY: 1,
   maxY: null,
   roofOnly: false,
 };
@@ -344,7 +308,7 @@ const LOSA_REMATE: TileDef = {
     [D.NEG_Z]: [S.EMPTY],
   },
   weight: 0.1,
-  minY: 2,
+  minY: 1,
   maxY: null,
   roofOnly: false,
 };
@@ -389,9 +353,6 @@ export const ALL_TILES: TileDef[] = [
   PILOTI_ESQUINA_NX_NZ,
   PILOTI_ESQUINA_PX_NZ,
   EMPTY_GROUND,
-  // Transition layer
-  VIGA_CARGA_X,
-  VIGA_CARGA_Z,
   // Habitation modules
   MODULO_BALCON_PX,
   MODULO_BALCON_NX,
